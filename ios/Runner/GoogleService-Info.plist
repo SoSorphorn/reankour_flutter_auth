@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>952687788584-i06qqmcv55bc0q173961h1j10akchejh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.952687788584-i06qqmcv55bc0q173961h1j10akchejh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCkA18WyFVMyd3Dbq7434-v7Hw2Ci_avro</string>
+	<key>GCM_SENDER_ID</key>
+	<string>952687788584</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.appbeginning</string>
+	<key>PROJECT_ID</key>
+	<string>reankour-flutter</string>
+	<key>STORAGE_BUCKET</key>
+	<string>reankour-flutter.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:952687788584:ios:f52986ce13be403c</string>
+	<key>DATABASE_URL</key>
+	<string>https://reankour-flutter.firebaseio.com</string>
+</dict>
+</plist>

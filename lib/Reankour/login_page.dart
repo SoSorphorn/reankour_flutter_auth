@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class LoginPage extends StatefulWidget{
   LoginPage({this.auth, this.onSignedIn});
@@ -19,22 +21,34 @@ enum FormType{
   register
 }
 class _LoginPageState extends State<LoginPage>{
+
+  FirebaseUser myUser;
   bool _isLoading;
   String _email;
   String _password;
   FormType _formType = FormType.login;
   final formKey = new GlobalKey<FormState>();
+  bool isLogged = false;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     TextStyle textstyle = Theme.of(context).textTheme.title;
     // TODO: implement build
     return new Scaffold(
       appBar: AppBar(
-        title: Text("ReanKour"),
+        title: Text(isLogged? "Tutor Profile" : "ReanKour"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.power_settings_new,
+            ),
+            onPressed: _logout,
+          ),
+        ],
       ),
       body: new Stack(
         children: <Widget>[
@@ -57,12 +71,14 @@ Widget _showBody(){
           _showInputEmail(),
           _showInputPassword(),
           _showPrimaryButton(),
+          _showFacebookLogin(),
           _showSecondaryButton(),
         ],
       ),
     ),
   );
 }
+
 
 //Function show progress bar
 Widget _showCircularProgress(){
@@ -149,7 +165,7 @@ Widget _showInputPassword(){
 // Function check button login or sign up
 Widget _showPrimaryButton(){
   return Padding(
-    padding: EdgeInsets.all(20.0),
+    padding: EdgeInsets.all(10.0),
     child: RaisedButton(
       color: Colors.blueAccent,
       textColor: Colors.white,
@@ -164,7 +180,7 @@ Widget _showPrimaryButton(){
 //Function check whether user have account or not
 Widget _showSecondaryButton(){
   return Padding(
-    padding: EdgeInsets.all(40.0),
+    padding: EdgeInsets.all(20.0),
     child: new FlatButton(
       child: _formType == FormType.login? 
             new Text("Create a new account?",textAlign: TextAlign.center,style: new TextStyle(color: Colors.blue,fontSize: 20.0,), ) 
@@ -174,6 +190,63 @@ Widget _showSecondaryButton(){
   );
 }
 
+  // Function show facebook login
+
+  Widget _showFacebookLogin(){
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: isLogged? new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Text(
+            "Name" + myUser.displayName,
+          )
+        ],
+      ) : FacebookSignInButton(
+                              onPressed: _login,
+                              ),
+    );
+  }
+
+  //Check condition when login with facebook
+  Future <FirebaseUser> _loginWithFacebook() async{
+    var facebookLogin = new FacebookLogin();
+    var result = await facebookLogin.logInWithReadPermissions(['email']);
+
+    debugPrint(result.status.toString());
+
+    if (result.status == FacebookLoginStatus.loggedIn){
+      FirebaseUser user = 
+        await _auth.signInWithFacebook(accessToken: result.accessToken.token)
+              .then((onValue){
+                isLogged == true;
+              });
+      return user;
+    }
+    return null;
+  }
+
+  //Function login with facebook
+  void _login(){
+    _loginWithFacebook().then((response){
+      if (response != null){
+        myUser = response;
+        isLogged == true;
+        setState(() {
+          
+        });
+      }
+    });
+  }
+
+  //Function logout in facebook
+  void _logout() async{
+    await _auth.signOut().then((response){
+      isLogged == false;
+      setState(() {
+      });
+    });
+  }
 
   //Function check validation when submit 
   bool validateAndSave(){
@@ -212,6 +285,7 @@ Widget _showSecondaryButton(){
   }
 
   void moveToRegister(){
+    debugPrint("Register successfuly");
     formKey.currentState.reset();
     setState(() {
       _formType = FormType.register;

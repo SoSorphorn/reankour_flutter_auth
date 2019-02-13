@@ -40,6 +40,7 @@ class _LoginPageState extends State<LoginPage>{
   FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+     _isIos = Theme.of(context).platform == TargetPlatform.iOS;
     TextStyle textstyle = Theme.of(context).textTheme.title;
     // TODO: implement build
     return new Scaffold(
@@ -69,6 +70,7 @@ Widget _showBody(){
           _showPrimaryButton(),
           _showFacebookLogin(),
           _showSecondaryButton(),
+          _showErrorMessage(),
         ],
       ),
     ),
@@ -78,7 +80,7 @@ Widget _showBody(){
 
 //Function show progress bar
 Widget _showCircularProgress(){
-  if (_isLoading == true)  {
+  if (_isLoading)  {
     return Center(child: CircularProgressIndicator());
   } return Container(height: 0.0, width: 0.0,);
 }
@@ -103,7 +105,7 @@ Widget _showInputEmail(){
             controller: emailController,
             validator: (String value){
               if (value.isEmpty){
-                return "Please enter correct email";
+                return "Email cannot blank";
               }
             },
             onSaved: (value) => _email = value,
@@ -137,7 +139,7 @@ Widget _showInputPassword(){
         controller: passwordController,
         validator: (String value){
           if (value.isEmpty){
-            return "Please enter correct password";
+            return "Password cannot blank";
           }
         },
         onSaved: (value) => _password = value,
@@ -166,9 +168,9 @@ Widget _showPrimaryButton(){
       color: Colors.blueAccent,
       textColor: Colors.white,
       child: _formType == FormType.login? 
-      new Text("Login",style: new TextStyle(fontSize: 20)) :
-      new Text("Register",style: new TextStyle(fontSize: 20)),
-      onPressed: (){validateAndSubmit();},
+        new Text("Login",style: new TextStyle(fontSize: 20)) :
+        new Text("Register",style: new TextStyle(fontSize: 20)),
+        onPressed: _validateAndSubmit,
     ),
   );
 }
@@ -176,7 +178,7 @@ Widget _showPrimaryButton(){
 //Function check whether user have account or not
 Widget _showSecondaryButton(){
   return Padding(
-    padding: EdgeInsets.all(20.0),
+    padding: EdgeInsets.all(10.0),
     child: new FlatButton(
       child: _formType == FormType.login? 
             new Text("Create a new account?",textAlign: TextAlign.center,style: new TextStyle(color: Colors.blue,fontSize: 20.0,), ) 
@@ -251,7 +253,7 @@ Widget _showSecondaryButton(){
     } 
     return false;
   }
-  void validateAndSubmit() async{
+  _validateAndSubmit() async{
     setState(() {
       _errorMessage = "";
       _isLoading = true;
@@ -286,6 +288,15 @@ Widget _showSecondaryButton(){
     }
   }
 
+  //Validation the form
+  void _validationForm(){
+    if (formKey.currentState.validate()){
+       FormType.login;
+    } else{
+      FormType.register;
+    }
+  }
+
   @override
   void initState() {
     _errorMessage = "";
@@ -308,6 +319,27 @@ Widget _showSecondaryButton(){
       _formType = FormType.login;
     });
   }
+
+  //Show error message
+  Widget _showErrorMessage() {
+    debugPrint("Error message");
+    if (_errorMessage.length > 0 && _errorMessage != null) {
+      debugPrint("Here is $_errorMessage");
+      return new Text(
+        _errorMessage,
+        style: TextStyle(
+            fontSize: 13.0,
+            color: Colors.red,
+            height: 1.0,
+            fontWeight: FontWeight.w300),
+      );
+    } else {
+      return new Container(
+        height: 0.0,
+      );
+    }
+  }
+
 
   
   

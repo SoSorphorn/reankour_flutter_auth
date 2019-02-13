@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'auth.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -24,8 +25,11 @@ class _LoginPageState extends State<LoginPage>{
 
   FirebaseUser myUser;
   bool _isLoading;
+  bool _isIos;
+  String _errorMessage;
   String _email;
   String _password;
+
   FormType _formType = FormType.login;
   final formKey = new GlobalKey<FormState>();
   bool isLogged = false;
@@ -40,15 +44,7 @@ class _LoginPageState extends State<LoginPage>{
     // TODO: implement build
     return new Scaffold(
       appBar: AppBar(
-        title: Text(isLogged? "Tutor Profile" : "ReanKour"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.power_settings_new,
-            ),
-            onPressed: _logout,
-          ),
-        ],
+        title: Text("ReanKour"),
       ),
       body: new Stack(
         children: <Widget>[
@@ -202,9 +198,7 @@ Widget _showSecondaryButton(){
             "Name" + myUser.displayName,
           )
         ],
-      ) : FacebookSignInButton(
-                              onPressed: _login,
-                              ),
+      ) : FacebookSignInButton(onPressed: _login,),
     );
   }
 
@@ -254,39 +248,54 @@ Widget _showSecondaryButton(){
     if (form.validate()){
       form.save();
       return true;
-    } else {
-      return false;
-    }
+    } 
+    return false;
   }
   void validateAndSubmit() async{
     setState(() {
+      _errorMessage = "";
       _isLoading = true;
     });
     if (validateAndSave()){
+      String userId = "";
       try{
         if (_formType == FormType.login){
-          String userId =  await widget.auth.signInWithEmailAndPassword(_email, _password);
-          // FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
-          // print("Sign up: ${user.uid}");
+           userId =  await widget.auth.signIn(_email, _password);
           print ("SignUp: ${userId}");
         }else{
-          // FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
-          // print("Register user: ${user.uid}");
-          String userId = await widget.auth.createUserWithEmailAndPassword(_email,_password);
+           userId = await widget.auth.signUp(_email,_password);
           print ("Registerd user:${userId}");
         }
-
+        setState(() {
+          _isLoading = false;
+        });
+        if (userId.length > 0 && userId != null) {
+          widget.onSignedIn();
+          debugPrint("$userId");
+        }
       }
       catch(e){
         _isLoading = false;
         print("Error $e");
+        if(_isIos){
+          _errorMessage = e.details;
+        } else {
+          _errorMessage = e.message;
+        }
       }
     }
   }
 
+  @override
+  void initState() {
+    _errorMessage = "";
+    _isLoading = false;
+    super.initState();
+  }
+
   void moveToRegister(){
-    debugPrint("Register successfuly");
     formKey.currentState.reset();
+    _errorMessage = "";
     setState(() {
       _formType = FormType.register;
     });
@@ -294,10 +303,12 @@ Widget _showSecondaryButton(){
 
   void moveToLogin(){
     formKey.currentState.reset();
+    _errorMessage = "";
     setState(() {
       _formType = FormType.login;
     });
   }
 
+  
   
 }

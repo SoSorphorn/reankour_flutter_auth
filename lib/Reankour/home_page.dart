@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _showTodoList() {
-    // if (_todoList.length > 0) {
+    if (_todoList.length > 0) {
       return ListView.builder(
           shrinkWrap: true,
           itemCount: _todoList.length,
@@ -168,11 +168,11 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           });
-    // } else {
-    //   return Center(child: Text("Welcome. Your list is empty",
-    //     textAlign: TextAlign.center,
-    //     style: TextStyle(fontSize: 30.0),));
-    // }
+    } else {
+      return Center(child: Text("Welcome. Your list is empty",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 30.0),));
+    }
   }
 
   @override

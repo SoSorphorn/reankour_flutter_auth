@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'auth.dart';
 import 'login_page.dart';
 import 'home_page.dart';
+import 'package:appbeginning/Reankour/tab_navigation_page.dart';
 
 class RootPage extends  StatefulWidget{
     RootPage({this.auth});
@@ -81,7 +82,7 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return new HomePage(
+          return new TabNavigation(
             userId: _userId,
             auth: widget.auth,
             onSignedOut: _onSignedOut,

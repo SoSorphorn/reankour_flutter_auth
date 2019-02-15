@@ -11,8 +11,7 @@ void main() {
       theme: ThemeData( 
       primarySwatch: Colors.blue,
       ),
-      // home: RootPage(auth: new Auth()),
-      home: TabNavigation(),
+      home: RootPage(auth: new Auth()),
 		)
 	);
 }

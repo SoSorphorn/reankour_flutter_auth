@@ -1,11 +1,18 @@
+
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:appbeginning/Reankour/tutor_page.dart';
 import 'package:appbeginning/Reankour/aboutus_page.dart';
 import 'package:appbeginning/Reankour/contactus_page.dart';
-
+import 'package:appbeginning/Reankour/home_page.dart';
+import 'auth.dart';
 
 class TabNavigation extends StatefulWidget{
+
+    TabNavigation({this.userId,this.auth,this.onSignedOut});
+    final String userId;
+    final BaseAuth auth;
+    final VoidCallback onSignedOut;
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -19,7 +26,7 @@ class _TabNavigationState extends State<TabNavigation>{
 
   Widget _callPage(int currentIndex){
     switch(currentIndex){
-      case 0: return TutorPage();
+      case 0: return HomePage();
       case 1: return AboutUsPage();
       case 2: return ContactUsPage();
 
@@ -34,9 +41,16 @@ class _TabNavigationState extends State<TabNavigation>{
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            actions: <Widget>[
+              new FlatButton(
+                  child: new Text('Logout',
+                      style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+                      onPressed:  _signOut,
+                  ),
+            ],
             backgroundColor: Colors.blueAccent,
            ),
-          body: Container(),
+          body: _callPage(_currentIndex),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: (value){
@@ -65,4 +79,15 @@ class _TabNavigationState extends State<TabNavigation>{
     );
   }
 
+  _signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.onSignedOut();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
 }
+

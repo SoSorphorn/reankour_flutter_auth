@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:appbeginning/Reankour/tutor_page.dart';
-import 'package:appbeginning/Reankour/aboutus_page.dart';
+import 'package:appbeginning/Reankour/tutorlist_page.dart';
 import 'package:appbeginning/Reankour/contactus_page.dart';
 import 'package:appbeginning/Reankour/home_page.dart';
 import 'auth.dart';
@@ -26,8 +26,8 @@ class _TabNavigationState extends State<TabNavigation>{
 
   Widget _callPage(int currentIndex){
     switch(currentIndex){
-      case 0: return HomePage();
-      case 1: return AboutUsPage();
+      case 0: return TutorListPage();
+      case 1: return HomePage();
       case 2: return ContactUsPage();
 
       break;
@@ -65,8 +65,8 @@ class _TabNavigationState extends State<TabNavigation>{
                 title: Text('Home'),
               ),
               new BottomNavigationBarItem(
-                icon: Icon(Icons.mail),
-                title: Text('Messages'),
+                icon: Icon(Icons.list),
+                title: Text('todo'),
               ),
               new BottomNavigationBarItem(
                 icon: Icon(Icons.person),

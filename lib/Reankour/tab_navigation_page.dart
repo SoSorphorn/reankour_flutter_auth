@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:appbeginning/Reankour/tutor_page.dart';
+// import 'package:appbeginning/Reankour/tutor_page.dart';
 import 'package:appbeginning/Reankour/tutorlist_page.dart';
 import 'package:appbeginning/Reankour/contactus_page.dart';
 import 'package:appbeginning/Reankour/home_page.dart';
@@ -31,11 +31,11 @@ class _TabNavigationState extends State<TabNavigation>{
       case 2: return ContactUsPage();
 
       break;
-      default: TutorPage();
+      default: TutorListPage();
     }
   }
   Widget build(BuildContext context) {
-    // TODO: implement build
+    // TODO: implement build'
    return MaterialApp(
       home: DefaultTabController(
         length: 3,

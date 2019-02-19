@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './Reankour/auth.dart';
 import './Reankour/root_page.dart';
 import './Reankour/tab_navigation_page.dart';
+import 'listview_sample.dart';
 
 void main() {
 	runApp(
@@ -12,6 +13,7 @@ void main() {
       primarySwatch: Colors.blue,
       ),
       home: RootPage(auth: new Auth()),
+      // home: MyApp(),
 		)
 	);
 }

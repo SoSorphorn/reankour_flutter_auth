@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:appbeginning/Reankour/tutorlist_page.dart';
 import 'package:appbeginning/Reankour/contactus_page.dart';
 import 'package:appbeginning/Reankour/home_page.dart';
+import 'login_page.dart';
 import 'auth.dart';
 
 class TabNavigation extends StatefulWidget{
@@ -41,6 +42,13 @@ class _TabNavigationState extends State<TabNavigation>{
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            leading: new IconButton(
+              icon: new Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              ),
+            ), 
             actions: <Widget>[
               new FlatButton(
                   child: new Text('Logout',

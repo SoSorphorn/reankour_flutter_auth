@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "952687788584",
+    "firebase_url": "https://reankour-flutter.firebaseio.com",
+    "project_id": "reankour-flutter",
+    "storage_bucket": "reankour-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952687788584:android:f52986ce13be403c",
+        "android_client_info": {
+          "package_name": "com.example.appbeginning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952687788584-hjoe7ddv985ti2rigeavqm8sivadejus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkuiQxLzpYco1oodU6XC-DkpR3nDD7Q7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -40,7 +40,7 @@ class _TabNavigationState extends State<TabNavigation>{
    return MaterialApp(
       home: DefaultTabController(
         length: 3,
-        child: Scaffold(
+        child: Scaffold( 
           appBar: AppBar(
             leading: new IconButton(
               icon: new Icon(Icons.arrow_back, color: Colors.white),

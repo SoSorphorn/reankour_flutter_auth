@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appbeginning/Reankour/models/tutor.dart';
+
 
 class TutorListPage extends StatefulWidget{
   @override
@@ -109,10 +109,4 @@ class _TutorListPageState extends State<TutorListPage>{
       ),
     );
   }
-
-  Widget test()
-{
-  
-} 
-
 }

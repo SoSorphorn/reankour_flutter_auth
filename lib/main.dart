@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './Reankour/auth.dart';
 import './Reankour/root_page.dart';
 import './Reankour/tab_navigation_page.dart';
-
+import 'dart:async';
 void main() {
 	runApp(
 		MaterialApp(
